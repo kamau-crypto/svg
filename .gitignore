@@ -1,0 +1,4 @@
+#Excluding the test files
+/tests/
+#Excluding the visual studio code default files
+/.vscode/
