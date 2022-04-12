@@ -1,4 +1,7 @@
-
+//
+//Get the svg point
+const svg = document.querySelector('svg');
+//
 function lineConnect(x1, y1, x2, y2) {
     //
     //Define the circle's constants and variables
@@ -39,6 +42,31 @@ function lineConnect(x1, y1, x2, y2) {
     const py2 = parseFloat(svgElement.getAttributeNS(null, 'y2'));
     svgElement.setAttributeNS(null, 'y2', c2y + dy);
     //
+    show_point();
     return px1, py1, px2, py2;
 
+}
+function show_point() {
+    //
+    //Get the element
+    const svg = document.querySelector("svg");
+    //
+    //Create an svg point
+    const points = (e) => {
+        const point = svg.createSVGPoint();
+        //
+        //Get page's coordinates
+        point.x = e.clientX;
+        point.y = e.clientY;
+        //
+        //convert the screen coordinates to real world coordinates
+        const coord = point.matrixTransform(svg.getScreenCTM().inverse());
+        //
+        //
+        alert(`The corrdinates are x: ${point.x} and y: ${point.y}`);
+
+    }
+    //
+    //Add an event listener
+    svg.addEventListener("click", points);
 }
