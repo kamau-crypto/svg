@@ -3,7 +3,6 @@
 async function add_svg() {
     //
     //Get the svg element
-    const content = document.getElementsByClassName('content');
     const svg = document.querySelector("svg");
     //
     //Set the namespace of the elements
@@ -77,6 +76,4 @@ async function add_svg() {
     line.setAttribute('id', "connector");
 
     svg.appendChild(line);
-
-
 }
