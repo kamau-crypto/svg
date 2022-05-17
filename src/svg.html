@@ -9,7 +9,7 @@
     <script type="module">
         //
         //Resolve the reference to the svg developer
-        import svg from "../script.js";
+        import svg from "../svg.js";
         //
         //Make the svg class visible outside the module
         window.onload = async () => {
@@ -24,30 +24,29 @@
     </script>
 </head>
 
-<body onclick="window.svg.movement()">
-    <svg viewBox="0 0 600 300">
+<body>
+    <div class="header">SVG Template</div>
+    <div class="content">
+        <svg id='svg-object' height="100%" width="100%" viewBox="0 0 600 310">
 
-        <line x1="300" y1="0" x2="300" y2="300" />
+            <line x1="300" y1="0" x2="300" y2="300" />
 
-        <line x1="0" y1="150" x2="600" y2="150" />
+            <line x1="0" y1="150" x2="600" y2="150" />
 
-        <line x1="150" y1="0" x2="150" y2="300" />
+            <line x1="150" y1="0" x2="150" y2="300" />
 
-        <line x1="450" y1="0" x2="450" y2="300" />
+            <line x1="450" y1="0" x2="450" y2="300" />
 
-        <line x1="0" y1="75" x2="600" y2="75" />
+            <line x1="0" y1="75" x2="600" y2="75" />
 
-        <line x1="0" y1="225" x2="600" y2="225" />
-        <!-- 
-        <circle id="circle1" cx="150" cy="225" r="75" />
+            <line x1="0" y1="225" x2="600" y2="225" />
 
-        <circle id="circle1" cx="450" cy="75" r="75" />
+            <!-- <circle cx="150" cy="225" r="75" />
+            <circle cx="450" cy="75" r="75" />
 
-        <line id="connector" x1="150" y1="225" x2="450" y2="75" /> -->
-
-
-
-    </svg>
+            <line id="connector" x1="150" y1="225" x2="450" y2="75" /> -->
+        </svg>
+    </div>
 </body>
 
 </html>
