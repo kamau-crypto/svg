@@ -2,3 +2,4 @@
 /tests/
 #Excluding the visual studio code default files
 /.vscode/
+*.js

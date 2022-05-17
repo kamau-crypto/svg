@@ -52,14 +52,18 @@ export default class create_svg {
     }
     //
     //The function that uses the points of the circle to draw a line that joins the two circles.
-    static lineConnect(c1, c2) {
+    static lineConnect(
+    //
+    c1, 
+    //
+    c2) {
         //
         //Obtain the points of the circles
         const c1x = c1.x;
         const c1y = c1.y;
         const cx2 = c2.x;
         const cy2 = c2.y;
-        const radius = c1.r;
+        const radius = c2.r;
         //
         //Calculate the angle of inclination of the line
         const incX = (cx2 - c1x);

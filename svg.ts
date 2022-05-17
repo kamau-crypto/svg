@@ -62,7 +62,7 @@ export default class create_svg {
         const c1y: number = c1.y;
         const cx2: number = c2.x;
         const cy2: number = c2.y;
-        const radius: number = c1.r!;
+        const radius: number = c2.r;
         //
         //Calculate the angle of inclination of the line
         const incX: number = (cx2 - c1x);
