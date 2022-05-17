@@ -1,52 +1,86 @@
-export default class svg {
+//
+//Draw two circles. Have a line connector that connects both circles using the line connector function
+//Use the move point function to move the circles from one point to the next.
+export default class createSvg {
     //
-    //Get the element that acts as the canvas to all our svg elements
-
-    //
-    //Get the namespace that defines all our svg elements
-    NS = "http://www.w3.org/2000/svg";
-    //
-    //constructor
-    constructor(NS) {
+    //The function constructor
+    constructor() {
         //
-        //super();
+        //Get the namespace that defines all our svg elements
+        this.NS = "http://www.w3.org/2000/svg";
         //
-        this.NS = NS;
-
+        //The name of the svg element in the html form
+        this.svg = document.querySelector('svg');
+        //
+        //The X-coordinate and Y-coordinate once the point is clicked on the html and after the conversion to svg coordinates
+        this.points;
+        //
+        //The first SVG circle element created
+        this.circle1;
+        //
+        //These are the specifications for the first circle
+        this.c1 = { x: 150, y: 225, r: 75 };
+        //
+        //These are the specifications for circle 2
+        this.c2 = { x: 450, y: 75, r: 75 };
+        //
+        //The line identifier:- to mark the highlighting line.
+        this.line;
     }
     //
     //Draw the two circles
     async draw_circle() {
-        const svg = document.querySelector('svg');
         //
         //Create a circle within the SVG element
-        let circle1 = document.createElementNS(this.NS, "circle");
-        circle1.setAttribute("id", "circle1");
-        circle1.setAttribute('cx', '150');
-        const c1x = parseFloat(circle1.getAttribute('cx'));
-        circle1.setAttribute('cy', '225');
-        const c1y = parseFloat(circle1.getAttribute('cy'));
-        circle1.setAttribute('r', '75');
-        const rc1 = parseFloat(circle1.getAttribute('r'));
-        svg.appendChild(circle1);
+        this.circle1 = document.createElementNS(this.NS, "circle");
+        this.circle1.setAttribute("id", "circle1");
+        this.circle1.setAttribute('cx', this.c1.x);
+        this.circle1.setAttribute('cy', this.c1.y);
+        this.circle1.setAttribute('r', this.c1.r);
+        this.svg.appendChild(this.circle1);
         //
         //Create the second circle within the SVG element
         let circle2 = document.createElementNS(this.NS, 'circle');
         circle2.setAttribute("id", "circle2");
-        circle2.setAttribute('cx', '450');
-        const c2x = parseFloat(circle2.getAttribute('cx'));
-        circle2.setAttribute('cy', '75');
-        const c2y = parseFloat(circle2.getAttribute('cy'));
-        circle2.setAttribute('r', '75');
-        const rc2 = parseFloat(circle2.getAttribute('r'));
-
-        svg.appendChild(circle2);
+        circle2.setAttribute('cx', this.c2.x);
+        circle2.setAttribute('cy', this.c2.y);
+        circle2.setAttribute('r', this.c2.r);
+        this.svg.appendChild(circle2);
         //
         //Create the line
-        let line = document.createElementNS(this.NS, 'line');
+        const { p1, p2 } = await this.lineConnect();
+        const line = document.createElementNS(this.NS, 'line');
+        line.setAttribute("id", "connector");
+        line.setAttribute("x1", p1.x1);
+        line.setAttribute("y1", p1.y1);
+        line.setAttribute("x2", p2.x2);
+        line.setAttribute("y2", p2.y2);
+        this.svg.appendChild(line);
+    }
+    //
+    //The function that uses the points of the circle to draw a line that joins the two circles.
+    async lineConnect() {
         //
-        //return all the cirles' centers and their x and y points.
-        return { svg, c1x, c1y, rc1, c2x, c2y, rc2, circle1, line }
+        //Obtain the points of the circles
+        const c1x = this.c1.x;
+        const c1y = this.c1.y;
+        const cx2 = this.c2.x;
+        const cy2 = this.c2.y;
+        const radius = this.c1.r;
+        //
+        //Calculate the angle of inclination of the line
+        const incX = (cx2 - c1x);
+        const incY = (c1y - cy2);
+        const theta = Math.atan(incY / incX);
+        //
+        //The distance from the center of the circle to the point the line joins the circle
+        const dx = Math.cos(theta) * radius;
+        const dy = Math.sin(theta) * dx;
+        //
+        //Compact the line coordinates into an array of objects
+        const p1 = { x1: c1x + dx, y1: c1y - dy }
+        const p2 = { x2: cx2 - dx, y2: cy2 + dy }
+        return { p1, p2 }
     }
     //
     //This abstract method
@@ -59,7 +93,7 @@ export default class svg {
         await this.move_circle();
         //
         //Connect the line
-        await this.lineConnect();
+        //await this.lineConnect();
     }
     //
     //This is the function that gets the mouse point once a point is clicked and converts the point
@@ -67,83 +101,36 @@ export default class svg {
     async showPoint() {
         //
         //Get the svg element
-        const { svg } = await this.draw_circle();
+        const element = this.svg;
         //
         //Transform the mouse coordinates into real world coordinates once a point
         //is clicked
         const show_point = (e) => {
             //
             //Create an svg point
-            const p = svg.createSVGPoint();
+            const p = element.createSVGPoint();
             //
             //Set the client page's coordinates 
             p.x = e.clientX;
             p.y = e.clientY;
             //
             //convert the screen coordinates to svg coordinates
-            const coord = p.matrixTransform(svg.getScreenCTM().inverse());
+            const coord = p.matrixTransform(element.getScreenCTM().inverse());
             //
-            //alert(`The coordinates of this point are x: ${coord.x} and y: ${coord.y}`);
-            const pointx = coord.x;
-            const pointy = coord.y;
-            alert(`the x-coordinate is ${pointx}, and the y coordinate is ${pointy}`);
-            //
-            //Return the pointx and pointy
-            return { pointx, pointy };
-        };
+            //An object of the returned x and y coordinates
+            this.points = { x: coord.x, y: coord.y };
+        }
         //
         //Add the event listener
-        svg.addEventListener("click", show_point);
-        //
-        //Get the points returned from show points once they are clicked.
-        const { pointx, pointy } = show_point;
-        //Return the coordinates once they are clicked
-        return { pointx, pointy };
+        element.addEventListener("click", show_point);
     }
     //
-    //MOve the circle to the desired point
+    //Move the circle to the desired point
     async move_circle() {
         //
-        //Destructure the show point method to get the returned coordinates
-        const { pointx, pointy } = this.showPoint();
-        //
-        //Get the first circle drawn
-        const { circle1 } = await this.draw_circle();
-        //
         //Move the circle to the defined points
-        circle1.setAttribute("cx", pointx);
-        circle1.setAttribute("cy", pointy);
+        this.circle1.setAttribute("cx", this.points.x);
+        this.circle1.setAttribute("cy", this.points.y);
     }
-    //
-    //The function that uses the points of the circle to draw a line that joins the two circles.
-    async lineConnect() {
-        //
-        //Destructure the show point method to get the returned coordinates
-        const { pointx, pointy } = await this.showPoint();
-        //
-        //Get all points from the drawn circles
-        const { c2x, c2y, rc1, line } = await this.draw_circle();
-        //
-        //Obtain the points of the circles
-        const c1x = pointx;
-        const c1y = pointy;
-        const cx2 = c2x;
-        const cy2 = c2y;
-        const radius = rc1;
-        //
-        //Calculate the angle of inclination of the line
-        const incX = (cx2 - c1x);
-        const incY = (c1y - cy2);
-        const theta = Math.atan(incY / incX);
-        //
-        //The distance from the center of the circle to the point the line joins the circle
-        const dx = Math.cos(theta) * radius;
-        const dy = Math.sin(theta) * dx;
-        //
-        //Redraw the line connector with the updated coordinates
-        line.setAttribute("x1", c1x + dx);
-        line.setAttribute("y1", c1y - dy);
-        line.setAttribute("x2", cx2 - dx);
-        line.setAttribute("y2", cy2 + dy);
-    }
+
 }

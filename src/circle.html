@@ -5,26 +5,11 @@
     <title>SVG circle that covers the top</title>
     <!--
     Css file. -->
-    <link rel="stylesheet" href="./svg.css">
-    <script type="module">
-        //
-        //Resolve the reference to the svg developer
-        import svg from "../script.js";
-        //
-        //Make the svg class visible outside the module
-        window.onload = async () => {
-            //
-            window.svg = new svg();
-            //
-            await window.svg.draw_circle();
-        }
-        //
-        //make sure the movement method works outside the module
-        window.svg = svg;    
-    </script>
+    <link rel="stylesheet" href="svg.css">
+    <script src="../index.js"></script>
 </head>
 
-<body>
+<body onload="add_svg()">
     <div class="header">SVG Template</div>
     <div class="content">
         <svg id='svg-object' height="100%" width="100%" viewBox="0 0 600 310">
