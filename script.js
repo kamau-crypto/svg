@@ -58,7 +58,7 @@ export default class createSvg {
         const theta = Math.atan(incY / incX);
         //
         //The distance from the center of the circle to the point the line joins the circle
-        const dx = Math.cos(theta) * c1.r;
+        const dx = Math.cos(theta) * c2.r;
         const dy = Math.sin(theta) * dx;
         //
         //Compact the line coordinates into an array of objects
@@ -117,9 +117,11 @@ export default class createSvg {
     //
     //Move the line with respect to the new clicked point.
     move_line(p) {
-        console.log(p.x, p.y);
+        //
+        //Get the points to connect the new line to
         const { p1, p2 } = this.constructor.lineConnect((p.x, p.y), this.c2);
-        console.log({ p1, p2 });
+        //
+        //Connect the line
         this.line.setAttribute("x1", p1.x1);
         this.line.setAttribute("y1", p1.y1);
         this.line.setAttribute("x2", p2.x2);

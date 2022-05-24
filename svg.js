@@ -58,25 +58,18 @@ export default class create_svg {
     //
     c2) {
         //
-        //Obtain the points of the circles
-        const c1x = c1.x;
-        const c1y = c1.y;
-        const cx2 = c2.x;
-        const cy2 = c2.y;
-        const radius = c2.r;
-        //
         //Calculate the angle of inclination of the line
-        const incX = (cx2 - c1x);
-        const incY = (c1y - cy2);
+        const incX = (c2.x - c1.x);
+        const incY = (c1.y - c2.y);
         const theta = Math.atan(incY / incX);
         //
         //The distance from the center of the circle to the point the line joins the circle
-        const dx = Math.cos(theta) * radius;
+        const dx = Math.cos(theta) * c2.r;
         const dy = Math.sin(theta) * dx;
         //
         //Compact the line coordinates into an array of objects
-        const p1 = { x1: c1x + dx, y1: c1y - dy };
-        const p2 = { x2: cx2 - dx, y2: cy2 + dy };
+        const p1 = { x1: c1.x + dx, y1: c1.y - dy };
+        const p2 = { x2: c2.x - dx, y2: c2.y + dy };
         return { p1, p2 };
     }
     //
