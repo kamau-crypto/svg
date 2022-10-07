@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>House SVG</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        svg {
+            background-color:darkgoldenrod;
+            height: 50vh;
+            width: 50%;
+        }
+        polygon {
+            fill: aqua;
+            stroke: black;
+        }
+        circle{
+            stroke: black;
+            stroke-width: 1; 
+            fill:black;
+        }
+        rect {
+            fill: bisque;
+            stroke: black;
+            width:460.8; 
+            height: 185.1;
+        }
+        .windows {
+            fill: brown;
+            width:61.7; 
+            height: 76.8;
+        }
+        .door {
+            fill: brown;
+            width: 61.7; 
+            height: 123.4;
+        }
+
+    </style>
+</head>
+<body>
+
+    <svg viewBox="0 0 768 432">
+        <!-- Triangle -->
+        <polygon points="76.1 246.86, 691.2 246.86, 384 61.7"/>
+
+        <!-- Circle -->
+        <circle cx="384." cy="70" r="6.17"/>
+        
+        <!-- Large rectangle -->
+        <rect x="153.6" y="246.56"/>
+
+        <!-- Window 1 -->
+        <rect class="windows" x="230.4" y="308.56"/>
+
+        <!-- Window 2 -->
+        <rect class="windows" x="505" y="308.56"/>
+        
+        <!-- Door -->
+        <rect class="door" x="370" y="310.2"/>
+    </svg>
+</body>
+</html>
